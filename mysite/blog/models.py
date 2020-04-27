@@ -1,13 +1,14 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+# from django.core.urlresolvers import reverse
 
 
 # Create your models here.
 
 class PublishedManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(author='blog')
+        return super(PublishedManager, self).get_queryset().filter(status='published')
 
 
 class Post(models.Model):
