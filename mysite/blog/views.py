@@ -1,11 +1,21 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Post
+from django.views.generic import ListView
 
 
 # Create your views here.
 
+# widok generyczny ListView analogiczny do def post_list
 
+class PostListView(ListView):
+    queryset = Post.published.all()
+    context_object_name = 'posts'
+    paginate_by = 3
+    template_name = 'blog/post/list.html'
+
+
+# II sposób na widok
 def post_list(request):
     object_list = Post.published.all()
     paginator = Paginator(object_list, 3)  # po 3 posty na każdej stronie
