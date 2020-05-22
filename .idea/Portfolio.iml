@@ -16,7 +16,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/my_env" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.7 (my_env)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.7 (Portfolio)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TemplatesService">
