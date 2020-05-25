@@ -1,6 +1,7 @@
 {% extends "blog/base.html" %}
 
 {% block title %} Udostępnij post {% endblock %}
+
 {% block content %}
     {% if sent %}
     <h1> Wiadomość e-mail została wysłana </h1>
@@ -16,3 +17,11 @@
     </form>
 {% endif %}
 {% endblock %}
+
+<!--kod formularza który generuje poszczególne pola i przeprowadza iteracje przez nie-->
+<!--{% for field in form %}-->
+<!--<div>-->
+<!--  {{ field.errors }}-->
+<!--  {{ field.label_tag }} {{field }}-->
+<!--</div>-->
+<!--{% endfor %}-->
