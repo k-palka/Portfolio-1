@@ -8,6 +8,7 @@ from django.core.mail import send_mail
 
 # Create your views here.
 
+
 # widok generyczny ListView analogiczny do def post_list
 
 class PostListView(ListView):
@@ -45,9 +46,12 @@ def post_detail(request, year, month, day, post):
     return render(request, 'blog/post/detail.html', {'post': post})
 
 
-# rozwijamy formularze
+def test(request):
+    return render(request, 'blog/post/share.html')
+
 
 def post_share(request, post_id):
+    # Retrieve post by id
     post = get_object_or_404(Post, id=post_id, status='published')
     sent = False
 
@@ -55,17 +59,18 @@ def post_share(request, post_id):
         form = EmailPostForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            post_url = request.build_absolute_url(
+            post_url = request.build_absolute_uri(
                 post.get_absolute_url())
             subject = '{} ({}) zachęca do przeczytania "{}"'.format(cd['name'], cd['email'], post.title)
-            message = 'Przeczytaj post "{}" na stronie {}\n\n Komentarz dodany przez {}: {}'.format(post.title,
-                                                                                                    post_url,
-                                                                                                    cd['name'],
-                                                                                                    cd['comments'])
-            send_mail(subject, message, 'admin@myblog.com', [cd['to']])
+            message = 'Przeczytaj post "{}" na stronie {}\n\n{}\' Komentarz dodany przez: {}'.format(post.title,
+                                                                                                     post_url,
+                                                                                                     cd['name'],
+                                                                                                     cd['comments'])
+            send_mail(subject, message, 'katarzynapalka928@gmail.com',
+                      [cd['to']])
             sent = True
-        else:
-            form = EmailPostForm()
-        return render(request, 'blog/post/share.html', {'post': post,
-                                                        'form': form,
-                                                        'sent': sent})
+    else:
+        form = EmailPostForm()
+    return render(request, 'blog/post/share.html', {'post': post,
+                                                    'form': form,
+                                                    'sent': sent})
