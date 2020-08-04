@@ -4,6 +4,8 @@ from .models import Post, Comment
 from django.views.generic import ListView
 from .forms import EmailPostForm, CommentForm
 from django.core.mail import send_mail
+from taggit.models import Tag
+
 
 
 # Create your views here.
@@ -18,8 +20,13 @@ class PostListView(ListView):
 
 
 # II sposób na widok
-def post_list(request):
+def post_list(request, tag_slug=None):
     object_list = Post.published.all()
+    tag = None
+
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        object_list = object_list.filter(tags__in=[tag])
     paginator = Paginator(object_list, 3)  # po 3 posty na każdej stronie
     page = request.GET.get('page')  # parametr GET.page wskazującego na numer bieżącej strony
     try:
@@ -34,7 +41,8 @@ def post_list(request):
     return render(request,
                   'blog/post/list.html',
                   {'page': page,
-                   'posts': posts})
+                   'posts': posts,
+                   'tag': tag})
 
 
 def post_detail(request, year, month, day, post):
