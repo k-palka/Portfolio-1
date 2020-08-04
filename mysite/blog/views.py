@@ -8,7 +8,6 @@ from django.core.mail import send_mail
 
 # Create your views here.
 
-
 # widok generyczny ListView analogiczny do def post_list
 
 class PostListView(ListView):
@@ -53,7 +52,7 @@ def post_detail(request, year, month, day, post):
             new_comment.post = post
             new_comment.save()
     else:
-            comment_form = CommentForm()
+        comment_form = CommentForm()
     return render(request,
                   'blog/post/detail.html',
                   {'post': post,
